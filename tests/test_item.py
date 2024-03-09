@@ -3,6 +3,7 @@ import pytest
 import os
 
 from src.item import Item
+from src.phone import Phone
 
 
 @pytest.fixture
@@ -31,6 +32,15 @@ def test_str():
     assert str(item1) == 'Смартфон'
 
 
+def test_add():
+  item1 = Item("Смартфон", 100, 2)
+  phone1 = Phone("Телефон", 200, 4, 5)
+  assert item1 + phone1 == 6
+  assert phone1 + item1 == 6
+
+  with pytest.raises(ValueError):
+    phone1 + 1
+
 def test_calculate_total_price(position):
     assert position.calculate_total_price() == 3000
 
@@ -43,7 +53,7 @@ def test_apply_discount(position):
 def test_all(position):
     """Вызываем фикстуру 3 раза для каждой функции,
 поэтому ожидаемая длина 3"""
-    assert len(Item.all) == 5
+    assert len(Item.all) == 7
 
 
 def test_name_setter(position):
