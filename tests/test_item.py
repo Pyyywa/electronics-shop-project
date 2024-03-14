@@ -2,7 +2,7 @@
 import pytest
 import os
 
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 from src.phone import Phone
 
 
@@ -68,6 +68,16 @@ def test_string_to_number(stroka):
 
 def test_instantiate_from_csv(file):
     assert Item.instantiate_from_csv('src/items.csv') is None
-    assert len(Item.all) == 5
+    assert len(Item.all) == 9
+
+
+def test_instantiate_from_csv_not():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv('src/items.csv')
+
+
+def test_instantiate_from_csv_error():
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv('src/items.csv')
 
 
